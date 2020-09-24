@@ -22,40 +22,8 @@ class Chart extends Component {
     }
 
     drawChart() {
-        //
-        // const data = [2000, 3000, 2330, 1000, 900, 1230];
-        // const mapFactor = 0.1;
-        // const h = 500;
-        // const w = 700;
-        // const barHeight = 50;
-        //
-        // const svg = d3.select(this.refs.canvas)
-        //     .append("svg")
-        //     .attr("width", w)
-        //     .attr("height", h)
-        //     .style("border", "1px solid black");
-        //
-        // svg.selectAll("rect")
-        //     .data(data)
-        //     .enter()
-        //     .append("rect")
-        //     .attr("x", 0)
-        //     .attr("y", (d, i) => i * (barHeight + 10))
-        //     .attr("width", (d, i) => d * mapFactor)
-        //     .attr("height", barHeight)
-        //     .attr("fill", '#9c141f');
-        //
-        // svg.selectAll("text")
-        //     .data(data)
-        //     .enter()
-        //     .append("text")
-        //     .text((d) => d)
-        //     .attr("x", (d, i) => ( d * mapFactor ) + 10 - (500 * mapFactor))
-        //     .attr("y", (d, i) => ((i * barHeight) + 10) + (barHeight / 2))
-
 
         const data = [2000, 3000, 2330, 1000, 900, 1230];
-        const dates = ["12/09/2020", "12/09/2020", "12/09/2020", "12/09/2020", "12/09/2020", "12/09/2020"];
         const height = 600;
         const width = 400;
         const scale = 0.1;
@@ -85,13 +53,6 @@ class Chart extends Component {
             .attr("y", (dataPoint, iteration) => ((iteration * (stepHeight + 5)) + (25)))
             .text(dataPoint => dataPoint);
 
-        svg.selectAll("text")
-            .data(dates)
-            .enter()
-            .append("text")
-            .attr("x", (datapoint, iteration) => (datapoint * scale) + 10)
-            .attr("y", (dataPoint, iteration) => ((iteration * (stepHeight + 5)) + (25)))
-            .text(dataPoint => dataPoint);
     }
 
     render() {
@@ -107,7 +68,6 @@ class Chart extends Component {
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
                                     onChange={()=>{
-                                        console.log('cnahed')
                                     }}
                                 >
                                     <MenuItem value={'store1'}>Store1</MenuItem>
