@@ -56,32 +56,33 @@ class Chart extends Component {
 
 
         const data = [2000, 3000, 2330, 1000, 900, 1230];
-        const h = 600;
-        const w = 600;
+        const height = 600;
+        const width = 600;
         const scale = 0.1;
+        const stepHeight = 40;
 
         const svg = d3.select("#chart")
             .append("svg")
-            .attr("width", w)
-            .attr("height", h)
+            .attr("width", width)
+            .attr("height", height)
             .style("border", "1px solid black");
 
         svg.selectAll("rect")
             .data(data).enter()
             .append("rect")
-            .attr("width", 40)
+            .attr("width", stepHeight)
             .attr("height", (datapoint) => datapoint * scale)
             .attr("fill", "orange")
-            .attr("x", (datapoint, iteration) => iteration * 45)
-            .attr("y", (datapoint) => h - datapoint * scale)
+            .attr("x", (datapoint, iteration) => (iteration * (stepHeight + 5)) + 10)
+            .attr("y", (datapoint) => height - datapoint * scale);
 
         svg.selectAll("text")
             .data(data)
             .enter()
             .append("text")
-            .attr("x", (dataPoint, i) => i * 45 + 10)
-            .attr("y", (dataPoint, i) => h - dataPoint * scale - 10)
-            .text(dataPoint => dataPoint)
+            .attr("x", (dataPoint, i) =>( i * (stepHeight + 5) )+ 10)
+            .attr("y", (dataPoint, i) => height - dataPoint * scale - 10)
+            .text(dataPoint => dataPoint);
     }
 
     render() {
