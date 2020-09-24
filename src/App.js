@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
+import Chart from "./chart/chart";
 
 function App() {
   return (
     <div>
-      React app
+      <Chart/>
     </div>
   );
 }
