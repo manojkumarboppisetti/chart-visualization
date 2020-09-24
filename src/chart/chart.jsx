@@ -68,20 +68,21 @@ class Chart extends Component {
             .style("border", "1px solid black");
 
         svg.selectAll("rect")
-            .data(data).enter()
+            .data(data)
+            .enter()
             .append("rect")
-            .attr("width", stepHeight)
-            .attr("height", (datapoint) => datapoint * scale)
+            .attr("height", stepHeight)
+            .attr("width", (datapoint) => (datapoint * scale))
             .attr("fill", "orange")
-            .attr("x", (datapoint, iteration) => (iteration * (stepHeight + 5)) + 10)
-            .attr("y", (datapoint) => height - datapoint * scale);
+            .attr("x", (datapoint, iteration) => 0)
+            .attr("y", (datapoint, iteration) => (iteration * ( stepHeight + 5 ) + 10));
 
         svg.selectAll("text")
             .data(data)
             .enter()
             .append("text")
-            .attr("x", (dataPoint, i) =>( i * (stepHeight + 5) )+ 10)
-            .attr("y", (dataPoint, i) => height - dataPoint * scale - 10)
+            .attr("x", (datapoint, iteration) => (datapoint * scale) + 10)
+            .attr("y", (dataPoint, iteration) => ((iteration * ( stepHeight + 5 )) + (25)))
             .text(dataPoint => dataPoint);
     }
 
@@ -107,7 +108,7 @@ class Chart extends Component {
                                 </Select>
                             </FormControl>
                         </div>
-                        <div style={{"margin": "20px"}}>
+                        <div style={{"margin": "20px 0px"}}>
                             <div id={"chart"}/>
                         </div>
                     </CardContent>
