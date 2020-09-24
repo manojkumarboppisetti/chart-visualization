@@ -1,44 +1,100 @@
-// import React, { Component } from 'react';
+import React, { Component } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import React, { Component } from 'react';
-import { scaleBand, scaleLinear } from 'd3-scale';
+import Select from '@material-ui/core/Select'
 
-import data from '../data/data';
-import Axes from '../Axes';
-import Bars from '../Bars';
-
-import ResponsiveWrapper from '../ResponsiveWrapper';
+import * as d3 from "d3";
 
 class Chart extends Component {
+
     constructor(props) {
         super(props);
-        this.xScale = scaleBand();
-        this.yScale = scaleLinear();
+    }
+
+    componentDidMount() {
+
+        this.drawChart();
+
+    }
+
+    drawChart() {
+        //
+        // const data = [2000, 3000, 2330, 1000, 900, 1230];
+        // const mapFactor = 0.1;
+        // const h = 500;
+        // const w = 700;
+        // const barHeight = 50;
+        //
+        // const svg = d3.select(this.refs.canvas)
+        //     .append("svg")
+        //     .attr("width", w)
+        //     .attr("height", h)
+        //     .style("border", "1px solid black");
+        //
+        // svg.selectAll("rect")
+        //     .data(data)
+        //     .enter()
+        //     .append("rect")
+        //     .attr("x", 0)
+        //     .attr("y", (d, i) => i * (barHeight + 10))
+        //     .attr("width", (d, i) => d * mapFactor)
+        //     .attr("height", barHeight)
+        //     .attr("fill", '#9c141f');
+        //
+        // svg.selectAll("text")
+        //     .data(data)
+        //     .enter()
+        //     .append("text")
+        //     .text((d) => d)
+        //     .attr("x", (d, i) => ( d * mapFactor ) + 10 - (500 * mapFactor))
+        //     .attr("y", (d, i) => ((i * barHeight) + 10) + (barHeight / 2))
+
+
+        const data = [2000, 3000, 2330, 1000, 900, 1230];
+        const dates = ["12/09/2020", "12/09/2020", "12/09/2020", "12/09/2020", "12/09/2020", "12/09/2020"];
+        const height = 600;
+        const width = 400;
+        const scale = 0.1;
+        const stepHeight = 40;
+
+        const svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+        // .style("border", "1px solid black");
+
+        svg.selectAll("rect")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("height", stepHeight)
+            .attr("width", (datapoint) => (datapoint * scale))
+            .attr("fill", "#a71719")
+            .attr("x", (datapoint, iteration) => 0)
+            .attr("y", (datapoint, iteration) => (iteration * (stepHeight + 5)));
+
+        svg.selectAll("text")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("x", (datapoint, iteration) => (datapoint * scale) + 10)
+            .attr("y", (dataPoint, iteration) => ((iteration * (stepHeight + 5)) + (25)))
+            .text(dataPoint => dataPoint);
+
+        svg.selectAll("text")
+            .data(dates)
+            .enter()
+            .append("text")
+            .attr("x", (datapoint, iteration) => (datapoint * scale) + 10)
+            .attr("y", (dataPoint, iteration) => ((iteration * (stepHeight + 5)) + (25)))
+            .text(dataPoint => dataPoint);
     }
 
     render() {
-        const margins = {top: 50, right: 20, bottom: 100, left: 60};
-        const svgDimensions = {
-            width: Math.max(this.props.parentWidth, 300),
-            height: 500
-        };
-
-        const maxValue = Math.max(...data.map(d => d.value))
-
-        const xScale = this.xScale
-            .padding(0.5)
-            .domain(data.map(d => d.title))
-            .range([margins.left, svgDimensions.width - margins.right])
-
-        const yScale = this.yScale
-            .domain([0, maxValue])
-            .range([svgDimensions.height - margins.bottom, margins.top])
 
         return (
             <div>
@@ -60,27 +116,36 @@ class Chart extends Component {
                                 </Select>
                             </FormControl>
                         </div>
-                        <div style={{"margin": "20px 0px"}}>
-                            <svg width={svgDimensions.width} height={svgDimensions.height}>
-                                <Axes
-                                    scales={{xScale, yScale}}
-                                    margins={margins}
-                                    svgDimensions={svgDimensions}
-                                />
-                                <Bars
-                                    scales={{xScale, yScale}}
-                                    margins={margins}
-                                    data={data}
-                                    maxValue={maxValue}
-                                    svgDimensions={svgDimensions}
-                                />
-                            </svg>
+                        <div style={{"margin": "20px 0px", "display": "flex"}}>
+                            <div id={"chart"}/>
+                            <div className={"datesList"}>
+                                <div className={"dateItem"}>
+                                    April 11
+                                </div>
+                                <div className={"dateItem"}>
+                                    April 12
+                                </div>
+                                <div className={"dateItem"}>
+                                    April 13
+                                </div>
+                                <div className={"dateItem"}>
+                                    April 14
+                                </div>
+                                <div className={"dateItem"}>
+                                    April 15
+                                </div>
+                                <div className={"dateItem"}>
+                                    April 16
+                                </div>
+                            </div>
                         </div>
                     </CardContent>
                 </Card>
             </div>
-        )
+        );
     }
 }
 
-export default ResponsiveWrapper(Chart)
+Chart.propTypes = {};
+
+export default Chart;
